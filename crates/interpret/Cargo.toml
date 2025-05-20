@@ -3,9 +3,6 @@ lints.workspace = true
 [package]
 edition.workspace = true
 license.workspace = true
-name = "jsol-context"
+name = "jsol-interpret"
 rust-version.workspace = true
 version.workspace = true
-
-[dependencies]
-jsol-parse = { path = "../parse" }

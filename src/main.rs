@@ -2,7 +2,8 @@ use std::{fs, path::PathBuf};
 
 use clap::Parser;
 use color_eyre::Result;
-use jsol_parse::{RawJsolFile, RawOperation};
+use jsol_ir::LinkContext;
+use jsol_parse::RawJsolModule;
 use tracing_error::ErrorLayer;
 use tracing_subscriber::{
 	EnvFilter,
@@ -21,26 +22,18 @@ fn main() -> Result<()> {
 
 	let raw_data = fs::File::open(&args.file)?;
 
-	let mut raw_program = serde_json::from_reader::<_, RawJsolFile>(raw_data)?;
+	let raw_program = serde_json::from_reader::<_, RawJsolModule>(raw_data)?;
 
-	{
-		let Some(operations) = raw_program.operations_mut() else {
-			panic!("blah");
-		};
+	let mut linker = LinkContext::new();
 
-		operations.clear();
+	linker.resolve_module(raw_program);
 
-		operations.push(RawOperation::Nop);
-	}
-
-	fs::write(&args.file, serde_json::to_string_pretty(&raw_program)?)?;
+	dbg!(linker);
 
 	Ok(())
 }
 
 fn install_tracing() {
-	fs::create_dir_all("./out").unwrap();
-
 	let log_file = fs::OpenOptions::new()
 		.create(true)
 		.truncate(true)

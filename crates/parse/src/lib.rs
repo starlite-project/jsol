@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
-pub enum RawJsolFile {
+pub enum RawJsolModule {
 	Entrypoint {
 		operations: Vec<RawOperation>,
 	},
@@ -16,7 +16,7 @@ pub enum RawJsolFile {
 	},
 }
 
-impl RawJsolFile {
+impl RawJsolModule {
 	#[must_use]
 	pub const fn entrypoint() -> Self {
 		Self::Entrypoint {
@@ -52,11 +52,4 @@ impl RawJsolFile {
 #[serde(tag = "type", rename_all = "camelCase")]
 pub enum RawOperation {
 	Nop,
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct RawExport {
-	id: Option<u64>,
-	name: String,
 }

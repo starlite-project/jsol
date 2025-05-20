@@ -1,0 +1,11 @@
+lints.workspace = true
+
+[package]
+edition.workspace = true
+license.workspace = true
+name = "jsol-ir"
+rust-version.workspace = true
+version.workspace = true
+
+[dependencies]
+jsol-parse = { path = "../parse" }

@@ -216,6 +216,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "color-eyre",
+ "jsol-ir",
  "jsol-parse",
  "serde_json",
  "tracing",
@@ -224,7 +225,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "jsol-context"
+name = "jsol-interpret"
+version = "0.1.0"
+
+[[package]]
+name = "jsol-ir"
 version = "0.1.0"
 dependencies = [
  "jsol-parse",
