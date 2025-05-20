@@ -224,12 +224,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "jsol-ir"
+name = "jsol-context"
 version = "0.1.0"
-
-[[package]]
-name = "jsol-link"
-version = "0.1.0"
+dependencies = [
+ "jsol-parse",
+]
 
 [[package]]
 name = "jsol-parse"
