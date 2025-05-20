@@ -1,4 +1,8 @@
 {
-	"type": "entrypoint",
-	"operations": []
+  "type": "entrypoint",
+  "operations": [
+    {
+      "type": "nop"
+    }
+  ]
 }

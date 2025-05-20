@@ -2,7 +2,7 @@ use std::{fs, path::PathBuf};
 
 use clap::Parser;
 use color_eyre::Result;
-use jsol_parse::RawJsolFile;
+use jsol_parse::{RawJsolFile, RawOperation};
 use tracing_error::ErrorLayer;
 use tracing_subscriber::{
 	EnvFilter,
@@ -19,11 +19,21 @@ fn main() -> Result<()> {
 
 	let args = Args::parse();
 
-	let raw_data = fs::File::open(args.file)?;
+	let raw_data = fs::File::open(&args.file)?;
 
-	let raw_program = serde_json::from_reader::<_, RawJsolFile>(raw_data)?;
+	let mut raw_program = serde_json::from_reader::<_, RawJsolFile>(raw_data)?;
 
-	dbg!(raw_program);
+	{
+		let Some(operations) = raw_program.operations_mut() else {
+			panic!("blah");
+		};
+
+		operations.clear();
+
+		operations.push(RawOperation::Nop);
+	}
+
+	fs::write(&args.file, serde_json::to_string_pretty(&raw_program)?)?;
 
 	Ok(())
 }

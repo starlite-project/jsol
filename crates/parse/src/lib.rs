@@ -9,9 +9,9 @@ pub enum RawJsolFile {
 		operations: Vec<RawOperation>,
 	},
 	Module {
-		#[serde(skip_serializing_if = "Vec::is_empty")]
+		#[serde(skip_serializing_if = "Vec::is_empty", default)]
 		exports: Vec<()>,
-		#[serde(skip_serializing_if = "Option::is_none")]
+		#[serde(skip_serializing_if = "Option::is_none", default)]
 		operations: Option<Vec<RawOperation>>,
 	},
 }
@@ -31,8 +31,32 @@ impl RawJsolFile {
 			operations: None,
 		}
 	}
+
+	#[must_use]
+	pub fn operations(&self) -> Option<&[RawOperation]> {
+		match self {
+			Self::Entrypoint { operations } => Some(operations),
+			Self::Module { operations, .. } => Some(operations.as_ref()?),
+		}
+	}
+
+	pub fn operations_mut(&mut self) -> Option<&mut Vec<RawOperation>> {
+		match self {
+			Self::Entrypoint { operations } => Some(operations),
+			Self::Module { operations, .. } => Some(operations.as_mut()?),
+		}
+	}
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
-pub enum RawOperation {}
+pub enum RawOperation {
+	Nop,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RawExport {
+	id: Option<u64>,
+	name: String,
+}
