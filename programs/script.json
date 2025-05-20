@@ -4,5 +4,11 @@
     {
       "type": "nop"
     }
+  ],
+  "constants": [
+    {
+      "name": "DEBUG",
+      "value": true
+    }
   ]
 }

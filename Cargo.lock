@@ -218,6 +218,7 @@ dependencies = [
  "color-eyre",
  "jsol-ir",
  "jsol-parse",
+ "jsol-value",
  "serde_json",
  "tracing",
  "tracing-error",
@@ -237,6 +238,14 @@ dependencies = [
 
 [[package]]
 name = "jsol-parse"
+version = "0.1.0"
+dependencies = [
+ "jsol-value",
+ "serde",
+]
+
+[[package]]
+name = "jsol-value"
 version = "0.1.0"
 dependencies = [
  "serde",

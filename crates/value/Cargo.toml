@@ -3,10 +3,9 @@ lints.workspace = true
 [package]
 edition.workspace = true
 license.workspace = true
-name = "jsol-parse"
+name = "jsol-value"
 rust-version.workspace = true
 version.workspace = true
 
 [dependencies]
-jsol-value = { path = "../value" }
-serde = { workspace = true, features = ["derive"] }
+serde.workspace = true
